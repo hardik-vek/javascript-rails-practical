@@ -1,0 +1,72 @@
+<center>
+  <!-- <p>Name: <%#= @user.first_name + " " + @user.last_name %></p>
+  <p>Email: <%#= @user.email %></p>
+  <p>Password: <%#= @user.password %></p>
+  <p>Subcription: <%#= @user.subcription %></p>
+  <p>Subcription_email: <%#= @user.subscription_email %></p>
+  <p>Edit Profile:<%#= button_to "Edit",edit_user_path(@user),method: :get %></p>
+  <p>Go to Home Page:<%#= button_to "Back",users_path,method: :get %></p> -->
+
+  <%= form_with(model: @user,local: false, id: "profile") do |form| %>
+  <div class="form", id='email'>
+    <%= form.label :email %></br>
+    <%= form.text_field :email %>
+    <% @user.errors.full_messages_for(:email).each do |msg| %>
+      <div><%= msg %></div>
+    <% end %>
+  </div>
+  <div class="form", id='password'>
+    <%= form.label :password %></br>
+    <%= form.password_field :password %>
+    <% @user.errors.full_messages_for(:password).each do |msg| %>
+      <div><%= msg %></div>
+    <% end %>
+  </div>
+  <div class="form">
+    <%= form.label :subcription %></br>
+    <div type="checkbox" id="myCheck" onclick="myFunction()" ><%= form.check_box :subcription %></div>
+    <% @user.errors.full_messages_for(:subcription).each do |msg| %>
+      <div><%= msg %></div>
+    <% end %>
+  </div>
+  <div class="form">
+    <%= form.label :subscription_email %></br>
+    <div type='text' id="text" ><%= form.text_field :subscription_email %></div>
+    <% @user.errors.full_messages_for(:subscription_email).each do |msg| %>
+      <div><%= msg %></div>
+    <% end %>
+  </div>
+  <div><%= form.submit data: { disable_with: "Saving..." } %></div>
+<% end %>
+
+</center>
+
+<script>
+// var check = function() {
+//   if(document.getElementById('email').click){
+//     if(document.getElementById('password').value == document.getElementById('password_input').value){
+//       document.getElementById('message').style.color = 'green';
+//     }
+//     else{
+//       return false;
+//     }
+//   }
+// }
+function myFunction() {
+  var checkBox = document.getElementById("myCheck");
+  var text = document.getElementById("text");
+
+  text.disabled = checkBox.checked ? false : true;
+  // if (!text.disabled){
+  //   text.focus();
+  // }
+}
+
+// document.getElementById("myCheck").addEventListener("click", function() {
+//     toggle('area');
+//  });
+// function toggle(obj) {
+//     var el = document.getElementById(obj);
+//     el.style.display = (el.style.display != 'none' ? 'none' : '' );
+// }
+</script>

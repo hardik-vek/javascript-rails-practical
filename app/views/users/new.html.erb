@@ -1,0 +1,9 @@
+<h1>New User</h1>
+<%= render 'form' %>
+
+<script>
+document.body.addEventListener("ajax:success", (event) => {
+  const [data, status, xhr] = event.detail;
+});
+
+</script>
