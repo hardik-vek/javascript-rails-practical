@@ -4,7 +4,6 @@
   <p>Password: <%= @user.password %></p>
   <p>Subcription: <%= @user.subcription %></p>
   <p>Subcription_email: <%= @user.subscription_email %></p>
-  <p>Edit:<%= button_to "Edit",edit_user_path(@user),method: :get %></p>
   <p>Edit Profile:<%= button_to "Edit",profile_user_path(@user),method: :get %></p>
   <p>Go to Home Page:<%= button_to "Back",users_path,method: :get %></p> 
   <p>Delete:<%= button_to "Delete",user_path(@user),method: :delete %></p> 

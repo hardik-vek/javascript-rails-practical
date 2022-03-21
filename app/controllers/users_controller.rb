@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class UsersController < ApplicationController
-  before_action :find_user, only: [:show, :edit, :update, :profile, :destroy]
+  before_action :find_user, only: [:show, :profile, :update_profile, :update_password, :destroy]
 
   def index
     @users = User.all
@@ -23,25 +23,38 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def update
-    if @user.update(user_params)
-      flash[:notice] = "User successfully updated"
-      redirect_to users_path
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
   def destroy
     @user.destroy
     redirect_to users_path
   end
 
   def profile
+  end
 
+  def update_profile
+    respond_to do |format|  
+      if @user.update(user_params)
+        flash.now[:notice] = "Profile updated successfully"
+        format.js
+      else
+        flash.now[:errors] =  @user.errors.full_messages
+        format.js
+      end
+    end
+  end
+
+  def change_password
+    @pw = User.find(params[:id])
+  end
+
+  def update_password
+    if @user.update_attribute(:password,params[:new_password])
+      flash[:notice] = "Password updated successfully"
+      redirect_to users_path
+    else
+      flash[:errors] = @user.errors.full_messages
+      redirect_to change_password_user_path(@user)
+    end
   end
 
   private
