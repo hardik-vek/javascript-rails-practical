@@ -1,0 +1,88 @@
+<%= form_with(model: @user) do |form| %>
+  <div class="form">
+    <%= form.label :first_name %></br>
+    <%= form.text_field :first_name %>
+    <% @user.errors.full_messages_for(:first_name).each do |msg| %>
+      <div><%= msg %></div>
+    <% end %>
+  </div>
+  <div class="form">
+    <%= form.label :last_name %></br>
+    <%= form.text_field :last_name %>
+    <% @user.errors.full_messages_for(:last_name).each do |msg| %>
+      <div><%= msg %></div>
+    <% end %>
+  </div>
+  <div class="form">
+    <%= form.label :email %></br>
+    <%= form.email_field :email %>
+    <% @user.errors.full_messages_for(:email).each do |msg| %>
+      <div><%= msg %></div>
+    <% end %>
+  </div>
+  <div class="form">
+    <%= form.label :password %></br>
+    <%= form.password_field :password,id:"password", onchange:"check_pass();" %>
+    <span id = "message" style="color:red"> </span>
+    <% @user.errors.full_messages_for(:password).each do |msg| %>
+      <div><%= msg %></div>
+    <% end %>
+  </div>
+  <div class="form">
+    <%= form.label :password_confirmation %></br>
+    <%= form.password_field :password_confirmation,id:"password_confirmation", onchange:"check_pass();" %>
+    <span id = "message1" style="color:red"> </span>
+    <% @user.errors.full_messages_for(:password_confirmation).each do |msg| %>
+      <div><%= msg %></div>
+    <% end %>
+  </div>
+  <div class="form" id="subscription" >
+    <%= form.check_box :subcription, id:"myCheck" %>
+    <%= form.label :subcription%>
+    <% @user.errors.full_messages_for(:subcription).each do |msg| %>
+      <div><%= msg %></div>
+    <% end %>
+  </div>
+  <div class="form" id='div' style='display:none;'>
+    <%= form.label :subscription_email %></br>
+    <%= form.email_field :subscription_email,id:'subscription_email' %>
+    <% @user.errors.full_messages_for(:subscription_email).each do |msg| %>
+      <div><%= msg %></div>
+    <% end %>
+  </div>
+  <div id="submit" style="display:none;">
+    <%= form.submit %>
+  </div>
+<% end %>
+<script>
+//for subscription email
+document.getElementById("myCheck").addEventListener("click", function() {
+    toggle('div');
+ });
+function toggle(obj) {
+    var el = document.getElementById(obj);
+    el.style.display = (el.style.display != 'none' ? 'none' : '' );
+}
+
+//for password confirmation
+function check_pass() {
+  var el = document.getElementById("submit");
+  var pw = document.getElementById('password').value
+  var cpw = document.getElementById('password_confirmation').value 
+  var regularExpression  = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if(!regularExpression.test(pw)) {
+    document.getElementById("message").innerHTML=
+    "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character";
+  }else{
+     document.getElementById("message").innerHTML=""
+  }
+  if (pw == cpw) {
+     el.style.display= 'block';
+      document.getElementById("message1").innerHTML="";
+  } else {
+      el.style.display= 'none';
+      document.getElementById("message1").innerHTML="Password and confirm Password must be same!";
+  }
+}
+
+</script>
